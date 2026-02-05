@@ -20,28 +20,46 @@ class ProductSyncService
 
     public function syncProducts(): void
     {
-        // 1. Fetch from ERP
-        $response = Http::withToken($this->erpApiKey)
-            ->get("{$this->erpBaseUrl}/products");
+        $allErpIds = [];
+        $url = "{$this->erpBaseUrl}/products";
 
-        if ($response->failed()) {
-            Log::error('Failed to fetch products from ERP', ['status' => $response->status()]);
-            return;
-        }
+        do {
+            // 1. Fetch from ERP
+            $response = Http::withToken($this->erpApiKey)->get($url);
 
-        $erpProducts = $response->json('data'); // Assuming standard resource collection
+            if ($response->failed()) {
+                Log::error('Failed to fetch products from ERP', ['status' => $response->status(), 'url' => $url]);
+                throw new \Exception("Failed to fetch products from ERP: " . $response->status());
+            }
 
-        foreach ($erpProducts as $erpProduct) {
-            // 2. Update or Create Snapshot
-            // We do NOT modify local-only fields like 'is_published' unless desired (here we don't)
-            Product::updateOrCreate(
-                ['erp_product_id' => $erpProduct['id']], // Match by ERP ID
-                [
-                    'name' => $erpProduct['name'],
-                    'price' => $erpProduct['price'],
-                    'image' => $erpProduct['image_url'] ?? null,
-                ]
-            );
+            $json = $response->json();
+            $erpProducts = $json['data'] ?? []; // Handle potential missing data key
+
+            foreach ($erpProducts as $erpProduct) {
+                // 2. Update or Create Snapshot
+                Product::updateOrCreate(
+                    ['erp_product_id' => $erpProduct['id']], // Match by ERP ID
+                    [
+                        'name' => $erpProduct['name'],
+                        'description' => $erpProduct['description'] ?? null,
+                        'price' => $erpProduct['price'],
+                        'image' => $erpProduct['image_url'] ?? null,
+                        'is_active_in_erp' => $erpProduct['is_active'] ?? true,
+                    ]
+                );
+                $allErpIds[] = $erpProduct['id'];
+            }
+
+            // Handle Pagination (Standard Laravel)
+            $url = $json['links']['next'] ?? null;
+
+        } while ($url);
+
+        // 3. Handle Deactivation (Drift Prevention)
+        // Any product locally that was NOT in the full ERP fetch should be marked inactive.
+        if (!empty($allErpIds)) {
+            Product::whereNotIn('erp_product_id', $allErpIds)
+                ->update(['is_active_in_erp' => false]);
         }
     }
 }
