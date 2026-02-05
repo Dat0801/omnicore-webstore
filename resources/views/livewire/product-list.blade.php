@@ -23,7 +23,7 @@
                 
                 <div class="flex items-center justify-between mt-4">
                     <span class="text-xl font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
-                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200">
+                    <button wire:click="addToCart({{ $product->id }})" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200">
                         Add to Cart
                     </button>
                 </div>

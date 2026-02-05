@@ -12,9 +12,9 @@
     <nav class="bg-white shadow p-4 mb-6">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" class="text-2xl font-bold text-blue-600">OmniCore WebStore</a>
-            <div>
-                <a href="/" class="text-gray-600 hover:text-blue-600 mr-4">Home</a>
-                <a href="/checkout" class="text-gray-600 hover:text-blue-600">Checkout</a>
+            <div class="flex items-center space-x-6">
+                <a href="/" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                <livewire:cart-icon />
             </div>
         </div>
     </nav>

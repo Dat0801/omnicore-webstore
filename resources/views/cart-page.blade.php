@@ -1,5 +1,5 @@
 <x-layouts.app>
     <div class="py-12">
-        <livewire:checkout />
+        <livewire:cart />
     </div>
 </x-layouts.app>
