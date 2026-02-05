@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('erp_product_id')->unique(); // Snapshot ID from ERP
             $table->string('name');
+            $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->string('image')->nullable();
+            $table->boolean('is_active_in_erp')->default(true); // ERP controlled
             $table->boolean('is_published')->default(false); // WebStore controlled
             $table->timestamps();
         });
