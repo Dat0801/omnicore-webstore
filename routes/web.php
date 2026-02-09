@@ -13,3 +13,5 @@ Route::get('/cart', function () {
 Route::get('/checkout', function () {
     return view('checkout-page');
 })->name('checkout.index');
+
+Route::view('/login', 'login')->name('login');
