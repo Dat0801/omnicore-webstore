@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 class OrderSubmissionService
 {
     protected string $erpBaseUrl;
+
     protected string $erpApiKey;
 
     public function __construct()
@@ -45,10 +46,12 @@ class OrderSubmissionService
                 'status' => 'sent_to_erp',
                 'erp_order_id' => $erpOrderId,
             ]);
+
             return true;
         } else {
             Log::error('Failed to submit order to ERP', ['order_id' => $order->id, 'response' => $response->body()]);
             $order->update(['status' => 'failed']);
+
             return false;
         }
     }

@@ -18,7 +18,7 @@
                     </p>
                     <div class="mt-6 flex flex-wrap items-center gap-3">
                         <a
-                            href="#featured"
+                            href="{{ route('products.index') }}"
                             class="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-700"
                         >
                             Explore Collection
@@ -96,10 +96,10 @@
                 <h2 class="text-2xl font-semibold">Featured Products</h2>
                 <p class="text-sm text-slate-500">Hand-picked selections for your daily needs.</p>
             </div>
-            <a class="text-sm font-semibold text-blue-600 hover:text-blue-700" href="#">View all</a>
+            <a class="text-sm font-semibold text-blue-600 hover:text-blue-700" href="{{ route('products.index') }}">View all</a>
         </div>
         <div class="mt-6">
-            <livewire:product-list />
+            <livewire:product-list :sidebar="false" :pagination="false" :limit="4" />
         </div>
     </section>
 

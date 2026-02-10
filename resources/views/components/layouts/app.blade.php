@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <a href="#" class="hidden items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 md:flex">
+                        <a href="{{ route('dashboard') }}" class="hidden items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 md:flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0" />
                             </svg>

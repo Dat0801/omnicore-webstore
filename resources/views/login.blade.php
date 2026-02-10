@@ -1,5 +1,5 @@
-<x-layouts.auth>
-    <main class="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-16 pt-10 lg:grid-cols-[1.05fr_0.95fr]">
+<x-layouts.app>
+    <div class="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-16 pt-10 lg:grid-cols-[1.05fr_0.95fr]">
         <section class="rounded-[28px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-slate-900/10 backdrop-blur">
             <div class="flex flex-col gap-2">
                 <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">Welcome back</p>
@@ -86,7 +86,7 @@
 
             <p class="mt-6 text-center text-sm text-slate-500">
                 Need an account?
-                <a href="#" class="font-medium text-slate-900 hover:text-slate-700">Create one</a>
+                <a href="{{ route('register') }}" class="font-medium text-slate-900 hover:text-slate-700">Create one</a>
             </p>
         </section>
 
@@ -121,5 +121,5 @@
                 <p class="mt-2 text-xs text-slate-300">Compliant with modern security standards and multi-factor ready.</p>
             </div>
         </aside>
-    </main>
-</x-layouts.auth>
+    </div>
+</x-layouts.app>
