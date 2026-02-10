@@ -45,6 +45,7 @@ class ProductSyncService
                         'price' => $erpProduct['price'],
                         'image' => $erpProduct['image_url'] ?? null,
                         'is_active_in_erp' => $erpProduct['is_active'] ?? true,
+                        'is_published' => true,
                     ]
                 );
                 $allErpIds[] = $erpProduct['id'];
