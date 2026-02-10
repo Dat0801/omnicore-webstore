@@ -13,7 +13,7 @@ class ProductList extends Component
     public function togglePublish($productId)
     {
         $product = Product::findOrFail($productId);
-        $product->is_published = !$product->is_published;
+        $product->is_published = ! $product->is_published;
         $product->save();
     }
 
@@ -23,7 +23,7 @@ class ProductList extends Component
         $products = Product::latest()->paginate(20);
 
         return view('livewire.admin.product-list', [
-            'products' => $products
+            'products' => $products,
         ]);
     }
 }

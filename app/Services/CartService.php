@@ -13,7 +13,7 @@ class CartService
     public function add(int $productId, int $quantity = 1): void
     {
         $cart = $this->getCartFromSession();
-        
+
         if (isset($cart[$productId])) {
             $cart[$productId] += $quantity;
         } else {
@@ -26,7 +26,7 @@ class CartService
     public function remove(int $productId): void
     {
         $cart = $this->getCartFromSession();
-        
+
         if (isset($cart[$productId])) {
             unset($cart[$productId]);
         }
@@ -37,9 +37,10 @@ class CartService
     public function updateQuantity(int $productId, int $quantity): void
     {
         $cart = $this->getCartFromSession();
-        
+
         if ($quantity <= 0) {
             $this->remove($productId);
+
             return;
         }
 
@@ -68,6 +69,7 @@ class CartService
         return $products->map(function ($product) use ($cart) {
             $product->cart_quantity = $cart[$product->id];
             $product->total_price = $product->price * $product->cart_quantity;
+
             return $product;
         });
     }

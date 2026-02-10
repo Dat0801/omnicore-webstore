@@ -9,8 +9,8 @@ use App\Services\CartService;
 use App\Services\OrderSubmissionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class CheckoutTest extends TestCase
 {
@@ -45,7 +45,7 @@ class CheckoutTest extends TestCase
         $mockSubmissionService->shouldReceive('submitOrder')
             ->once()
             ->andReturn(true);
-        
+
         $this->app->instance(OrderSubmissionService::class, $mockSubmissionService);
 
         Livewire::test(Checkout::class)
@@ -63,7 +63,7 @@ class CheckoutTest extends TestCase
             'product_id' => $product->id,
             'quantity' => 2,
         ]);
-        
+
         $this->assertEquals(0, app(CartService::class)->count());
     }
 }

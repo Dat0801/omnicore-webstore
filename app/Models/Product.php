@@ -14,7 +14,12 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'original_price',
         'image',
+        'category',
+        'rating',
+        'reviews_count',
+        'badge',
         'is_active_in_erp',
         'is_published',
     ];
@@ -23,11 +28,13 @@ class Product extends Model
         'is_published' => 'boolean',
         'is_active_in_erp' => 'boolean',
         'price' => 'decimal:2',
+        'original_price' => 'decimal:2',
+        'rating' => 'decimal:1',
     ];
 
     public function scopePublished($query)
     {
         return $query->where('is_published', true)
-                     ->where('is_active_in_erp', true);
+            ->where('is_active_in_erp', true);
     }
 }

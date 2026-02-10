@@ -27,12 +27,12 @@ class SyncProducts extends Command
     public function handle(ProductSyncService $service)
     {
         $this->info('Starting product sync...');
-        
+
         try {
             $service->syncProducts();
             $this->info('Product sync completed successfully.');
         } catch (\Exception $e) {
-            $this->error('Sync failed: ' . $e->getMessage());
+            $this->error('Sync failed: '.$e->getMessage());
         }
     }
 }

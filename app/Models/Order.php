@@ -16,6 +16,13 @@ class Order extends Model
         'customer_name',
         'total_amount',
         'status',
+        'shipping_first_name',
+        'shipping_last_name',
+        'shipping_address',
+        'shipping_city',
+        'shipping_state',
+        'shipping_zip',
+        'payment_method',
     ];
 
     public function items(): HasMany

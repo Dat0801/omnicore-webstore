@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 class ProductSyncService
 {
     protected string $erpBaseUrl;
+
     protected string $erpApiKey;
 
     public function __construct()
@@ -29,7 +30,7 @@ class ProductSyncService
 
             if ($response->failed()) {
                 Log::error('Failed to fetch products from ERP', ['status' => $response->status(), 'url' => $url]);
-                throw new \Exception("Failed to fetch products from ERP: " . $response->status());
+                throw new \Exception('Failed to fetch products from ERP: '.$response->status());
             }
 
             $json = $response->json();
@@ -45,6 +46,7 @@ class ProductSyncService
                         'price' => $erpProduct['price'],
                         'image' => $erpProduct['image_url'] ?? null,
                         'is_active_in_erp' => $erpProduct['is_active'] ?? true,
+                        'is_published' => true,
                     ]
                 );
                 $allErpIds[] = $erpProduct['id'];
@@ -57,7 +59,7 @@ class ProductSyncService
 
         // 3. Handle Deactivation (Drift Prevention)
         // Any product locally that was NOT in the full ERP fetch should be marked inactive.
-        if (!empty($allErpIds)) {
+        if (! empty($allErpIds)) {
             Product::whereNotIn('erp_product_id', $allErpIds)
                 ->update(['is_active_in_erp' => false]);
         }
