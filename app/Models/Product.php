@@ -58,6 +58,16 @@ class Product extends Model
             ->pluck('products.category');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    public function approvedReviews(): HasMany
+    {
+        return $this->reviews()->where('is_approved', true);
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'erp_parent_id', 'erp_product_id');

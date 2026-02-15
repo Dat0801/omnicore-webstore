@@ -57,4 +57,5 @@ Route::middleware(['auth'])->group(function () {
     })->name('admin.products.show');
     Route::view('/admin/orders', 'admin.orders')->name('admin.orders.index');
     Route::view('/admin/categories', 'admin.categories')->name('admin.categories.index');
+    Route::view('/admin/reviews', 'admin.reviews')->name('admin.reviews.index');
 });

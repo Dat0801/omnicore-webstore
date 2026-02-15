@@ -61,6 +61,9 @@
                     <a href="{{ route('admin.categories.index') }}" class="hover:text-slate-900">
                         Categories
                     </a>
+                    <a href="{{ route('admin.reviews.index') }}" class="hover:text-slate-900">
+                        Reviews
+                    </a>
                     <a href="{{ route('dashboard') }}" class="hidden items-center gap-1 rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 md:inline-flex">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M5.25 12.75 9 9l3.75 3.75L16.5 9l3.75 3.75" />
