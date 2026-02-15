@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Product extends Model
 {
@@ -43,6 +44,18 @@ class Product extends Model
     {
         return $query->where('is_published', true)
             ->where('is_active_in_erp', true);
+    }
+
+    public static function orderedCategories(): Collection
+    {
+        return static::published()
+            ->select('products.category', 'category_displays.sort_order')
+            ->whereNotNull('products.category')
+            ->whereNull('products.erp_parent_id')
+            ->leftJoin('category_displays', 'products.category', '=', 'category_displays.name')
+            ->distinct()
+            ->orderByRaw('COALESCE(category_displays.sort_order, 9999), products.category')
+            ->pluck('products.category');
     }
 
     public function parent(): BelongsTo

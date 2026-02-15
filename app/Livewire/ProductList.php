@@ -115,13 +115,7 @@ class ProductList extends Component
             $products = $query->take($this->limit)->get();
         }
 
-        // Get categories for sidebar
-        $categories = Product::published()
-            ->select('category')
-            ->distinct()
-            ->whereNotNull('category')
-            ->orderBy('category')
-            ->pluck('category');
+        $categories = Product::orderedCategories();
 
         return view('livewire.product-list', [
             'products' => $products,

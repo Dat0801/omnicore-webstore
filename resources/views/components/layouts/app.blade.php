@@ -65,10 +65,14 @@
                             <span class="text-lg font-semibold tracking-tight">OMNICORE</span>
                         </a>
                         <div class="hidden items-center gap-5 text-sm font-medium text-slate-600 md:flex">
-                            <a class="hover:text-slate-900" href="{{ route('products.index') }}">Tech</a>
-                            <a class="hover:text-slate-900" href="{{ route('products.index') }}">Lifestyle</a>
-                            <a class="hover:text-slate-900" href="{{ route('products.index') }}">Essentials</a>
-                            <a class="hover:text-slate-900" href="{{ route('products.index') }}">Sales</a>
+                            @foreach($headerCategories ?? [] as $category)
+                                <a
+                                    class="hover:text-slate-900"
+                                    href="{{ route('products.index', ['selectedCategories' => [$category]]) }}"
+                                >
+                                    {{ $category }}
+                                </a>
+                            @endforeach
                         </div>
                     </div>
 
