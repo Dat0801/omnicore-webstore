@@ -121,16 +121,30 @@
         <!-- Main Content -->
         <div class="flex-1">
             @if($sidebar)
-            <!-- Toolbar -->
             <div class="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200/50">
-                <div class="text-sm text-slate-500">
-                    Sort by: 
-                    <select wire:model.live="sortBy" class="ml-2 rounded-lg border-none bg-slate-50 py-1 pl-3 pr-8 text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500">
-                        <option value="newest">Newest</option>
-                        <option value="price_asc">Price: Low to High</option>
-                        <option value="price_desc">Price: High to Low</option>
-                        <option value="rating">Best Rating</option>
-                    </select>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            wire:model.live.debounce.300ms="search"
+                            class="w-64 rounded-lg border border-slate-200 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                            placeholder="Search products..."
+                        >
+                        <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="text-sm text-slate-500">
+                        Sort by:
+                        <select wire:model.live="sortBy" class="ml-2 rounded-lg border-none bg-slate-50 py-1 pl-3 pr-8 text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500">
+                            <option value="newest">Newest</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="rating">Best Rating</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="flex items-center gap-2 rounded-lg bg-slate-100 p-1">

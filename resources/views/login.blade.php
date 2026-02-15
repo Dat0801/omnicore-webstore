@@ -7,7 +7,7 @@
                 <p class="text-sm text-slate-500">Manage orders, track shipments, and keep your store synced in one place.</p>
             </div>
 
-            <form class="mt-8 space-y-5" action="#" method="post">
+            <form class="mt-8 space-y-5" action="{{ route('login.store') }}" method="post">
                 @csrf
                 <div class="space-y-2">
                     <label class="text-sm font-medium text-slate-600" for="email">Email address</label>
@@ -46,7 +46,7 @@
 
                 <div class="flex items-center justify-between text-sm">
                     <label class="flex items-center gap-2 text-slate-500">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200" />
+                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200" />
                         Keep me logged in
                     </label>
                 </div>

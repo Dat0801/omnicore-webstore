@@ -1,4 +1,40 @@
-<div class="overflow-x-auto">
+<div class="space-y-4">
+    <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-slate-900">Products</h2>
+        <button
+            wire:click="syncFromErp"
+            wire:loading.attr="disabled"
+            wire:target="syncFromErp"
+            class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+            <svg
+                wire:loading.remove
+                wire:target="syncFromErp"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M5 19a9 9 0 0014-7V5M19 5A9 9 0 005 12v7" />
+            </svg>
+            <svg
+                wire:loading
+                wire:target="syncFromErp"
+                class="h-4 w-4 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8h4z"></path>
+            </svg>
+            <span wire:loading.remove wire:target="syncFromErp">Sync from ERP</span>
+            <span wire:loading wire:target="syncFromErp">Syncing...</span>
+        </button>
+    </div>
+
+    <div class="overflow-x-auto">
     <table class="min-w-full bg-white border border-gray-200">
         <thead>
             <tr class="bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -49,5 +85,6 @@
     </table>
     <div class="mt-4 px-6">
         {{ $products->links() }}
+    </div>
     </div>
 </div>

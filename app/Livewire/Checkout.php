@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\CartService;
 use App\Services\OrderSubmissionService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -83,6 +84,7 @@ class Checkout extends Component
             $total = $subtotal + $shipping + $tax;
 
             $order = Order::create([
+                'user_id' => Auth::id(),
                 'customer_name' => $this->first_name.' '.$this->last_name,
                 'customer_email' => $this->email,
                 'shipping_first_name' => $this->first_name,

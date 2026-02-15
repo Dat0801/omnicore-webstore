@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Livewire\ProductDetail;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,7 +24,12 @@ Route::get('/checkout', function () {
 })->name('checkout.index');
 
 Route::view('/login', 'login')->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+
 Route::view('/register', 'register')->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
@@ -31,4 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/orders', function () {
         return view('order-history-page');
     })->name('orders.index');
+
+    Route::get('/account/orders/{order}', function (Order $order) {
+        return view('order-detail-page', [
+            'order' => $order,
+        ]);
+    })->name('orders.show');
+
+    Route::view('/admin/products', 'admin.products')->name('admin.products.index');
 });

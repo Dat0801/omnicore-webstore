@@ -19,6 +19,8 @@ class ProductList extends Component
 
     public $minRating = 0;
 
+    public $search = '';
+
     public $sortBy = 'newest';
 
     public $viewMode = 'grid';
@@ -42,6 +44,7 @@ class ProductList extends Component
         'priceMax' => ['except' => 3500],
         'minRating' => ['except' => 0],
         'sortBy' => ['except' => 'newest'],
+        'search' => ['except' => ''],
     ];
 
     public function addToCart(int $productId)
@@ -55,7 +58,7 @@ class ProductList extends Component
 
     public function updated($propertyName)
     {
-        if (in_array($propertyName, ['selectedCategories', 'priceMin', 'priceMax', 'minRating', 'sortBy'])) {
+        if (in_array($propertyName, ['selectedCategories', 'priceMin', 'priceMax', 'minRating', 'sortBy', 'search'])) {
             $this->resetPage();
         }
     }
@@ -68,6 +71,13 @@ class ProductList extends Component
     public function render()
     {
         $query = Product::published();
+
+        if ($this->search !== '') {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
+            });
+        }
 
         // Filter by Category
         if (! empty($this->selectedCategories)) {
