@@ -6,7 +6,9 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
-            <a href="{{ route('products.index') }}" class="hover:text-slate-900 transition">Electronics</a>
+            <a href="{{ route('products.index') }}" class="hover:text-slate-900 transition">
+                {{ $product->category ?? 'Products' }}
+            </a>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -16,8 +18,11 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {{-- Product Images --}}
             <div class="space-y-6">
+                @php
+                    $current = $selectedVariant ?? $product;
+                @endphp
                 <div class="relative aspect-square overflow-hidden rounded-3xl bg-white p-8 border border-slate-100 shadow-sm">
-                    <img src="{{ $product->image ?? 'https://via.placeholder.com/600' }}" alt="{{ $product->name }}" class="h-full w-full object-contain object-center">
+                    <img src="{{ $current->image ?? 'https://via.placeholder.com/600' }}" alt="{{ $current->name }}" class="h-full w-full object-contain object-center">
                     <div class="absolute top-6 left-6">
                          @if($product->badge)
                             <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
@@ -30,13 +35,13 @@
                 <div class="grid grid-cols-4 gap-4">
                     {{-- Thumbnails (Static for now as model doesn't support multiple images yet) --}}
                     <button class="relative aspect-square overflow-hidden rounded-xl border-2 border-blue-600 bg-white p-2">
-                        <img src="{{ $product->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain">
+                        <img src="{{ $current->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain">
                     </button>
                     <button class="relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-white p-2 hover:border-blue-400 transition">
-                         <img src="{{ $product->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain opacity-50">
+                         <img src="{{ $current->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain opacity-50">
                     </button>
                     <button class="relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-white p-2 hover:border-blue-400 transition">
-                         <img src="{{ $product->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain opacity-50">
+                         <img src="{{ $current->image ?? 'https://via.placeholder.com/150' }}" class="h-full w-full object-contain opacity-50">
                     </button>
                     <button class="relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-white p-2 hover:border-blue-400 transition">
                          <div class="flex h-full w-full items-center justify-center text-xs font-medium text-slate-500">
@@ -48,18 +53,18 @@
 
             {{-- Product Info --}}
             <div>
-                <h1 class="text-4xl font-display font-bold text-slate-900 tracking-tight mb-4">{{ $product->name }}</h1>
+                <h1 class="text-4xl font-display font-bold text-slate-900 tracking-tight mb-4">{{ $current->name }}</h1>
                 
                 <div class="flex items-center gap-4 mb-6">
                     <div class="flex items-center text-yellow-400">
                         @for($i = 0; $i < 5; $i++)
-                            @if($i < floor($product->rating))
+                            @if($i < floor($current->rating))
                                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                             @else
                                 <svg class="h-5 w-5 text-slate-200 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                             @endif
                         @endfor
-                        <span class="ml-2 text-sm text-slate-500 font-medium">{{ $product->rating }} ({{ $product->reviews_count }} reviews)</span>
+                        <span class="ml-2 text-sm text-slate-500 font-medium">{{ $current->rating }} ({{ $current->reviews_count }} reviews)</span>
                     </div>
                     @if($product->is_published)
                         <span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">In Stock</span>
@@ -67,26 +72,48 @@
                 </div>
 
                 <div class="flex items-baseline gap-4 mb-8">
-                    <span class="text-4xl font-bold text-slate-900">${{ number_format($product->price, 2) }}</span>
-                    @if($product->original_price > $product->price)
-                        <span class="text-lg text-slate-400 line-through">${{ number_format($product->original_price, 2) }}</span>
-                        <span class="text-sm font-semibold text-rose-500">{{ round((($product->original_price - $product->price) / $product->original_price) * 100) }}% OFF</span>
+                    <span class="text-4xl font-bold text-slate-900">${{ number_format($current->price, 2) }}</span>
+                    @if($current->original_price && $current->original_price > $current->price)
+                        <span class="text-lg text-slate-400 line-through">${{ number_format($current->original_price, 2) }}</span>
+                        <span class="text-sm font-semibold text-rose-500">
+                            {{ round((($current->original_price - $current->price) / $current->original_price) * 100) }}% OFF
+                        </span>
                     @endif
                 </div>
 
                 <div class="prose prose-slate mb-8 text-slate-600">
-                    <p>{{ $product->description }}</p>
+                    <p>{{ $current->description }}</p>
                 </div>
 
-                {{-- Color Selection --}}
-                <div class="mb-8">
-                    <h3 class="text-sm font-medium text-slate-900 mb-4">Color: <span class="text-slate-500 font-normal">{{ $selectedColor }}</span></h3>
-                    <div class="flex items-center gap-3">
-                        <button type="button" class="h-8 w-8 rounded-full bg-slate-500 ring-2 ring-offset-2 ring-blue-600 focus:outline-none"></button>
-                        <button type="button" class="h-8 w-8 rounded-full bg-slate-200 hover:ring-2 hover:ring-offset-2 hover:ring-blue-400 focus:outline-none transition"></button>
-                        <button type="button" class="h-8 w-8 rounded-full bg-slate-900 hover:ring-2 hover:ring-offset-2 hover:ring-blue-400 focus:outline-none transition"></button>
+                @if(! empty($availableAttributes))
+                    <div class="mb-8 space-y-6">
+                        @foreach($availableAttributes as $attributeName => $values)
+                            <div>
+                                <h3 class="text-sm font-medium text-slate-900 mb-3">
+                                    {{ ucfirst($attributeName) }}:
+                                    <span class="text-slate-500 font-normal">
+                                        {{ $selectedAttributes[$attributeName] ?? $values[0] }}
+                                    </span>
+                                </h3>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    @foreach($values as $value)
+                                        @php
+                                            $isActive = ($selectedAttributes[$attributeName] ?? null) === $value;
+                                        @endphp
+                                        <button
+                                            type="button"
+                                            wire:click="selectAttribute('{{ $attributeName }}', '{{ $value }}')"
+                                            class="px-3 py-1.5 text-xs font-medium rounded-full border transition
+                                                {{ $isActive ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-700' }}"
+                                        >
+                                            {{ $value }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                </div>
+                @endif
 
                 {{-- Quantity and Actions --}}
                 <div class="flex flex-col sm:flex-row gap-4 mb-10">

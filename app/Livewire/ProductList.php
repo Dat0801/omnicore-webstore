@@ -70,7 +70,7 @@ class ProductList extends Component
 
     public function render()
     {
-        $query = Product::published();
+        $query = Product::published()->whereNull('erp_parent_id');
 
         if ($this->search !== '') {
             $query->where(function ($q) {

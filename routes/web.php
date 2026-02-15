@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderInvoiceDownloadController;
 use App\Livewire\ProductDetail;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,5 +50,10 @@ Route::middleware(['auth'])->group(function () {
     })->name('orders.show');
 
     Route::view('/admin/products', 'admin.products')->name('admin.products.index');
+    Route::get('/admin/products/{product}', function (Product $product) {
+        return view('admin.product-show', [
+            'product' => $product,
+        ]);
+    })->name('admin.products.show');
     Route::view('/admin/orders', 'admin.orders')->name('admin.orders.index');
 });

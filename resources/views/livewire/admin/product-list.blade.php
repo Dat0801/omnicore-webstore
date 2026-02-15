@@ -71,9 +71,14 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button wire:click="togglePublish({{ $product->id }})" class="text-indigo-600 hover:text-indigo-900 focus:outline-none">
-                            {{ $product->is_published ? 'Unpublish' : 'Publish' }}
-                        </button>
+                        <div class="flex items-center gap-4">
+                            <a href="{{ route('admin.products.show', $product) }}" class="text-slate-600 hover:text-slate-900">
+                                View
+                            </a>
+                            <button wire:click="togglePublish({{ $product->id }})" class="text-indigo-600 hover:text-indigo-900 focus:outline-none">
+                                {{ $product->is_published ? 'Unpublish' : 'Publish' }}
+                            </button>
+                        </div>
                     </td>
                 </tr>
             @empty

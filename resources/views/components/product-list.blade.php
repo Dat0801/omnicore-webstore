@@ -32,7 +32,9 @@ new class extends Component
     public function with()
     {
         return [
-            'products' => Product::where('is_published', true)->get(),
+            'products' => Product::published()
+                ->whereNull('erp_parent_id')
+                ->get(),
         ];
     }
 };

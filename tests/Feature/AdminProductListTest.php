@@ -35,4 +35,30 @@ class AdminProductListTest extends TestCase
         $response->assertSee('Admin Products');
         $response->assertSeeLivewire('admin.product-list');
     }
+
+    public function test_guest_is_redirected_from_admin_product_detail(): void
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->get(route('admin.products.show', $product));
+
+        $response->assertRedirect('/login');
+    }
+
+    public function test_authenticated_user_can_view_admin_product_detail(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::factory()->create([
+            'is_published' => true,
+            'is_active_in_erp' => true,
+        ]);
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.products.show', $product));
+
+        $response->assertStatus(200);
+        $response->assertSee('Product Details');
+        $response->assertSee($product->name);
+    }
 }
