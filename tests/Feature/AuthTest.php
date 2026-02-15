@@ -46,6 +46,19 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    public function test_invalid_credentials_show_error_on_login_page(): void
+    {
+        $response = $this->from(route('login'))->post(route('login.store'), [
+            'email' => 'wrong@example.com',
+            'password' => 'invalid-password',
+        ]);
+
+        $response->assertRedirect(route('login'));
+
+        $this->followRedirects($response)
+            ->assertSee('The provided credentials do not match our records.');
+    }
+
     public function test_user_can_logout_and_is_redirected_home(): void
     {
         $user = User::factory()->create();
@@ -57,5 +70,31 @@ class AuthTest extends TestCase
         $response->assertRedirect(route('home'));
 
         $this->assertGuest();
+    }
+
+    public function test_guest_sees_auth_links_in_header(): void
+    {
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        $response->assertSee('Sign in');
+        $response->assertSee('Create account');
+        $response->assertDontSee('Admin');
+        $response->assertDontSee('Account');
+    }
+
+    public function test_authenticated_user_sees_account_and_admin_links_in_header(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        $response->assertSee('Account');
+        $response->assertSee('Admin');
+        $response->assertDontSee('Sign in');
+        $response->assertDontSee('Create account');
     }
 }

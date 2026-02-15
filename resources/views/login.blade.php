@@ -7,6 +7,12 @@
                 <p class="text-sm text-slate-500">Manage orders, track shipments, and keep your store synced in one place.</p>
             </div>
 
+            @if ($errors->any())
+                <div class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <form class="mt-8 space-y-5" action="{{ route('login.store') }}" method="post">
                 @csrf
                 <div class="space-y-2">
@@ -16,9 +22,13 @@
                         name="email"
                         type="email"
                         placeholder="name@omnicore.com"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+                        value="{{ old('email') }}"
+                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100 @error('email') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror"
                         autocomplete="email"
                     />
+                    @error('email')
+                        <p class="text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="space-y-2">

@@ -21,12 +21,6 @@ class OrderHistory extends Component
         $this->resetPage();
     }
 
-    public function downloadInvoices()
-    {
-        // Placeholder for download functionality
-        session()->flash('success', 'Downloading invoices...');
-    }
-
     public function render()
     {
         $query = Order::query();

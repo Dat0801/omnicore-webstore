@@ -42,4 +42,27 @@ class ProductSearchTest extends TestCase
             ->assertSee('Blue Jeans')
             ->assertDontSee('Red T-Shirt');
     }
+
+    public function test_header_search_redirects_to_products_page_with_results(): void
+    {
+        Product::factory()->create([
+            'name' => 'Green Hoodie',
+            'description' => 'Cozy fleece hoodie',
+            'is_published' => true,
+            'is_active_in_erp' => true,
+        ]);
+
+        Product::factory()->create([
+            'name' => 'Black Jacket',
+            'description' => 'Waterproof outerwear',
+            'is_published' => true,
+            'is_active_in_erp' => true,
+        ]);
+
+        $response = $this->get(route('products.index', ['search' => 'Hoodie']));
+
+        $response->assertStatus(200);
+        $response->assertSee('Green Hoodie');
+        $response->assertDontSee('Black Jacket');
+    }
 }

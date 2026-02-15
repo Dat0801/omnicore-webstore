@@ -1,4 +1,4 @@
-<x-layouts.app>
+<x-layouts.admin>
     <div class="mx-auto w-full max-w-6xl px-6 py-8">
         <div class="mb-6 flex items-center justify-between">
             <div>
@@ -9,5 +9,4 @@
 
         <livewire:admin.product-list />
     </div>
-</x-layouts.app>
-
+</x-layouts.admin>

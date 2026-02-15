@@ -45,4 +45,31 @@ class OrderHistoryTest extends TestCase
         $response->assertSee('#OMN-'.$userOrder->id);
         $response->assertDontSee('#OMN-'.$otherOrder->id);
     }
+
+    public function test_authenticated_user_can_download_invoices_csv(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'user@example.com',
+        ]);
+
+        Order::create([
+            'user_id' => $user->id,
+            'customer_email' => 'user@example.com',
+            'customer_name' => 'User One',
+            'total_amount' => 100,
+            'status' => 'pending',
+        ]);
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('orders.download'));
+
+        $response->assertStatus(200);
+        $response->assertHeader('content-type', 'text/csv; charset=utf-8');
+
+        $content = $response->streamedContent();
+
+        $this->assertStringContainsString('Order ID', $content);
+        $this->assertStringContainsString('user@example.com', $content);
+    }
 }

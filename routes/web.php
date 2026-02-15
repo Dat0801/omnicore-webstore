@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderInvoiceDownloadController;
 use App\Livewire\ProductDetail;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
         return view('order-history-page');
     })->name('orders.index');
 
+    Route::get('/account/orders/download', OrderInvoiceDownloadController::class)->name('orders.download');
+
     Route::get('/account/orders/{order}', function (Order $order) {
         return view('order-detail-page', [
             'order' => $order,
@@ -46,4 +49,5 @@ Route::middleware(['auth'])->group(function () {
     })->name('orders.show');
 
     Route::view('/admin/products', 'admin.products')->name('admin.products.index');
+    Route::view('/admin/orders', 'admin.orders')->name('admin.orders.index');
 });

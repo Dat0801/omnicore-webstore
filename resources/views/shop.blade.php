@@ -120,7 +120,9 @@
                 <div class="relative p-8">
                     <p class="text-lg font-semibold">The Mobile Collection</p>
                     <p class="mt-2 text-sm text-slate-200">Capture every moment with professional precision and unmatched style.</p>
-                    <button class="mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900">Shop Mobile</button>
+                    <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-white">
+                        Shop Mobile
+                    </a>
                 </div>
             </div>
             <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white">
@@ -133,7 +135,9 @@
                 <div class="relative p-8">
                     <p class="text-lg font-semibold">Professional Optics</p>
                     <p class="mt-2 text-sm text-slate-200">Lenses designed for clarity and artistic expression in any lighting.</p>
-                    <button class="mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900">Explore Gear</button>
+                    <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-white">
+                        Explore Gear
+                    </a>
                 </div>
             </div>
         </div>
