@@ -109,64 +109,8 @@
             <h2 class="mt-2 text-2xl font-semibold">New Arrivals</h2>
         </div>
 
-        <div class="mt-8 grid gap-6 md:grid-cols-2">
-            <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white">
-                <img
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop"
-                    alt="Mobile collection"
-                    class="absolute inset-0 h-full w-full object-cover"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                <div class="relative p-8">
-                    <p class="text-lg font-semibold">The Mobile Collection</p>
-                    <p class="mt-2 text-sm text-slate-200">Capture every moment with professional precision and unmatched style.</p>
-                    <button class="mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900">Shop Mobile</button>
-                </div>
-            </div>
-            <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white">
-                <img
-                    src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop"
-                    alt="Professional optics"
-                    class="absolute inset-0 h-full w-full object-cover"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                <div class="relative p-8">
-                    <p class="text-lg font-semibold">Professional Optics</p>
-                    <p class="mt-2 text-sm text-slate-200">Lenses designed for clarity and artistic expression in any lighting.</p>
-                    <button class="mt-5 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-slate-900">Explore Gear</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200/70">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=900&auto=format&fit=crop" alt="Studio speaker" class="h-full w-full object-cover" />
-                </div>
-                <p class="mt-4 text-sm font-semibold">OmniBuds Pro</p>
-                <p class="text-sm text-blue-600">$129.00</p>
-            </div>
-            <div class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200/70">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=900&auto=format&fit=crop" alt="Laptop" class="h-full w-full object-cover" />
-                </div>
-                <p class="mt-4 text-sm font-semibold">Vantage Laptop 14"</p>
-                <p class="text-sm text-blue-600">$1,299.00</p>
-            </div>
-            <div class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200/70">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1512446816042-444d6412677f?q=80&w=900&auto=format&fit=crop" alt="Studio mic" class="h-full w-full object-cover" />
-                </div>
-                <p class="mt-4 text-sm font-semibold">StudioMic X1</p>
-                <p class="text-sm text-blue-600">$89.00</p>
-            </div>
-            <div class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200/70">
-                <div class="aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=900&auto=format&fit=crop" alt="Tablet" class="h-full w-full object-cover" />
-                </div>
-                <p class="mt-4 text-sm font-semibold">NotePad Air 11</p>
-                <p class="text-sm text-blue-600">$549.00</p>
-            </div>
+        <div class="mt-8">
+            <livewire:product-list :sidebar="false" :pagination="false" :limit="4" :new-arrivals-days="7" />
         </div>
     </section>
 

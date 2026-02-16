@@ -22,12 +22,12 @@
             <h1 class="text-3xl font-extrabold text-slate-900">My Orders</h1>
             <p class="mt-2 text-slate-500">Track, manage, and review your recent OMNICORE purchases.</p>
         </div>
-        <button wire:click="downloadInvoices" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-lg transition shadow-sm">
+        <a href="{{ route('orders.download') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-lg transition shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Download All Invoices
-        </button>
+        </a>
     </div>
 
     <!-- Filters -->
@@ -84,7 +84,7 @@
                     @forelse($orders as $order)
                         <tr class="hover:bg-slate-50 transition">
                             <td class="px-6 py-4">
-                                <a href="#" class="font-bold text-blue-600 hover:text-blue-700 hover:underline">
+                                <a href="{{ route('orders.show', $order) }}" class="font-bold text-blue-600 hover:text-blue-700 hover:underline">
                                     #OMN-{{ $order->erp_order_id ?? $order->id }}
                                 </a>
                             </td>
@@ -119,14 +119,14 @@
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-3">
                                     @if(in_array(strtolower($order->status), ['in_transit', 'processing', 'pending']))
-                                        <button class="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-100 transition">
+                                        <a href="{{ route('orders.show', $order) }}" class="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-100 transition">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                             Track
-                                        </button>
+                                        </a>
                                     @endif
-                                    <a href="#" class="text-sm font-semibold text-blue-600 hover:text-blue-800">View Details</a>
+                                    <a href="{{ route('orders.show', $order) }}" class="text-sm font-semibold text-blue-600 hover:text-blue-800">View Details</a>
                                     <button class="text-slate-400 hover:text-slate-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />

@@ -21,25 +21,18 @@ class OrderHistory extends Component
         $this->resetPage();
     }
 
-    public function downloadInvoices()
-    {
-        // Placeholder for download functionality
-        session()->flash('success', 'Downloading invoices...');
-    }
-
     public function render()
     {
         $query = Order::query();
 
-        // Filter by current user if authentication is used
-        // if (Auth::check()) {
-        //    $query->where('user_id', Auth::id()); // or customer_email
-        // }
-        // For now, assuming global orders or relying on implementation details not fully visible
-        // But typically we should filter by user.
-        // The Checkout component saves 'customer_email'.
-        // If the user is logged in, we should match email or user_id.
-        // Let's assume we match by email if user is logged in, or just show all for this demo/personal project context.
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $query->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhere('customer_email', $user->email);
+            });
+        }
 
         if ($this->filter !== 'all') {
             if ($this->filter === 'delivered') {

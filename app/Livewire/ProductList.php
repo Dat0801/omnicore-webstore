@@ -19,6 +19,8 @@ class ProductList extends Component
 
     public $minRating = 0;
 
+    public $search = '';
+
     public $sortBy = 'newest';
 
     public $viewMode = 'grid';
@@ -29,11 +31,16 @@ class ProductList extends Component
 
     public $limit = 12;
 
-    public function mount($sidebar = true, $pagination = true, $limit = 12)
+    public $badge = null;
+
+    public $newArrivalsDays = null;
+
+    public function mount($sidebar = true, $pagination = true, $limit = 12, $newArrivalsDays = null)
     {
         $this->sidebar = $sidebar;
         $this->pagination = $pagination;
         $this->limit = $limit;
+        $this->newArrivalsDays = $newArrivalsDays;
     }
 
     protected $queryString = [
@@ -42,6 +49,7 @@ class ProductList extends Component
         'priceMax' => ['except' => 3500],
         'minRating' => ['except' => 0],
         'sortBy' => ['except' => 'newest'],
+        'search' => ['except' => ''],
     ];
 
     public function addToCart(int $productId)
@@ -55,7 +63,7 @@ class ProductList extends Component
 
     public function updated($propertyName)
     {
-        if (in_array($propertyName, ['selectedCategories', 'priceMin', 'priceMax', 'minRating', 'sortBy'])) {
+        if (in_array($propertyName, ['selectedCategories', 'priceMin', 'priceMax', 'minRating', 'sortBy', 'search'])) {
             $this->resetPage();
         }
     }
@@ -67,7 +75,22 @@ class ProductList extends Component
 
     public function render()
     {
-        $query = Product::published();
+        $query = Product::published()->whereNull('erp_parent_id');
+
+        if ($this->badge !== null && $this->badge !== '') {
+            $query->where('badge', $this->badge);
+        }
+
+        if ($this->newArrivalsDays !== null) {
+            $query->where('created_at', '>=', now()->subDays((int) $this->newArrivalsDays));
+        }
+
+        if ($this->search !== '') {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
+            });
+        }
 
         // Filter by Category
         if (! empty($this->selectedCategories)) {
@@ -105,13 +128,7 @@ class ProductList extends Component
             $products = $query->take($this->limit)->get();
         }
 
-        // Get categories for sidebar
-        $categories = Product::published()
-            ->select('category')
-            ->distinct()
-            ->whereNotNull('category')
-            ->orderBy('category')
-            ->pluck('category');
+        $categories = Product::orderedCategories();
 
         return view('livewire.product-list', [
             'products' => $products,

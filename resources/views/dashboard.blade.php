@@ -20,15 +20,15 @@
                         </p>
                     </div>
                     <div class="flex gap-3">
-                        <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 whitespace-nowrap">
+                        <a href="{{ route('orders.index') }}" class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 whitespace-nowrap">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             Track Active Order
-                        </button>
-                        <button class="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 whitespace-nowrap">
+                        </a>
+                        <a href="{{ route('products.index') }}" class="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 whitespace-nowrap">
                             Shop New
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
                         <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
                             <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
                                 <h3 class="font-semibold text-slate-900">Recent Orders</h3>
-                                <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-700">View All</a>
+                                <a href="{{ route('orders.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">View All</a>
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm">
@@ -202,7 +202,7 @@
                         <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold text-slate-900">Default Shipping</h3>
-                                <a href="#" class="text-xs font-medium text-blue-600 hover:text-blue-700">Edit</a>
+                                <a href="{{ route('profile') }}" class="text-xs font-medium text-blue-600 hover:text-blue-700">Edit</a>
                             </div>
                             <div class="mt-4 flex items-start gap-3">
                                 <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
@@ -223,7 +223,7 @@
                         <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold text-slate-900">Payment Method</h3>
-                                <a href="#" class="text-xs font-medium text-blue-600 hover:text-blue-700">Edit</a>
+                                <a href="{{ route('profile') }}" class="text-xs font-medium text-blue-600 hover:text-blue-700">Edit</a>
                             </div>
                             <div class="mt-4 flex items-center gap-3">
                                 <div class="flex h-8 w-12 flex-shrink-0 items-center justify-center rounded bg-slate-900 text-white">
@@ -260,10 +260,9 @@
                             </div>
                         </div>
 
-                        <!-- Support Widget -->
                         <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
                             <p class="text-sm font-medium text-slate-900">Need help with an order?</p>
-                            <a href="#" class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700">
+                            <a href="mailto:support@omnicore.test" class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700">
                                 Contact Support
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

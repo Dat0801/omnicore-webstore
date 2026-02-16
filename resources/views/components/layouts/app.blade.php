@@ -58,22 +58,35 @@
 
         <div class="relative z-10">
             <nav class="border-b border-white/70 bg-white/70 backdrop-blur">
-                <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-5">
-                    <div class="flex items-center gap-8">
+                <div x-data="{ openCategories: false }" class="mx-auto w-full max-w-6xl px-4 sm:px-6 py-4 flex flex-wrap items-center gap-x-4 gap-y-3">
+                    <div class="flex items-center gap-2">
                         <a href="/" class="flex items-center gap-2">
                             <span class="flex h-9 w-9 items-center justify-center rounded-2xl bg-blue-600 text-white font-semibold">O</span>
                             <span class="text-lg font-semibold tracking-tight">OMNICORE</span>
                         </a>
-                        <div class="hidden items-center gap-5 text-sm font-medium text-slate-600 md:flex">
-                            <a class="hover:text-slate-900" href="#">Tech</a>
-                            <a class="hover:text-slate-900" href="#">Lifestyle</a>
-                            <a class="hover:text-slate-900" href="#">Essentials</a>
-                            <a class="hover:text-slate-900" href="#">Sales</a>
-                        </div>
                     </div>
 
-                    <div class="hidden flex-1 justify-center lg:flex">
-                        <div class="relative w-full max-w-md">
+                    <div class="order-2 flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <a href="{{ route('products.index') }}" class="hidden sm:inline-flex items-center hover:text-slate-900">
+                            Shop
+                        </a>
+                        <a href="#" class="hidden sm:inline-flex items-center hover:text-slate-900">
+                            Contact
+                        </a>
+                        <button
+                            type="button"
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                            @click="openCategories = ! openCategories"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16" />
+                            </svg>
+                            <span>Categories</span>
+                        </button>
+                    </div>
+
+                    <div class="order-3 w-full md:order-3 md:w-auto md:flex-1 md:px-4 lg:px-8">
+                        <form method="GET" action="{{ route('products.index') }}" class="relative w-full max-w-full md:max-w-md mx-auto">
                             <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 7.5 15.5a7.5 7.5 0 0 0 9.15 1.15Z" />
@@ -81,19 +94,38 @@
                             </span>
                             <input
                                 type="search"
+                                name="search"
+                                value="{{ request('search') }}"
                                 placeholder="Search products..."
                                 class="w-full rounded-full border border-slate-200 bg-white/80 px-10 py-2 text-sm text-slate-700 shadow-sm transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                             />
-                        </div>
+                        </form>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <a href="{{ route('dashboard') }}" class="hidden items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 md:flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0" />
-                            </svg>
-                            Account
-                        </a>
+                    <div class="ml-auto flex items-center gap-3 md:order-4">
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="hidden items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 md:flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0" />
+                                </svg>
+                                Account
+                            </a>
+                            <a href="{{ route('admin.orders.index') }}" class="hidden items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800 md:inline-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7.5h18M3 12h18M3 16.5h18" />
+                                </svg>
+                                Admin
+                            </a>
+                        @else
+                            <div class="hidden items-center gap-3 text-sm font-medium md:flex">
+                                <a href="{{ route('login') }}" class="text-slate-600 hover:text-slate-900">
+                                    Sign in
+                                </a>
+                                <a href="{{ route('register') }}" class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800">
+                                    Create account
+                                </a>
+                            </div>
+                        @endauth
                         <button class="hidden h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:text-slate-900 md:flex" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.598 1.126-4.312 2.733-.714-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -101,6 +133,25 @@
                         </button>
                         <livewire:cart-icon />
                     </div>
+
+                    @if (! empty($headerCategories))
+                        <div
+                            x-show="openCategories"
+                            x-transition
+                            class="order-5 w-full mt-2"
+                        >
+                            <div class="flex flex-wrap gap-3 text-sm font-medium text-slate-600">
+                                @foreach($headerCategories as $category)
+                                    <a
+                                        class="whitespace-nowrap rounded-full bg-white/80 px-3 py-1.5 text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
+                                        href="{{ route('products.index', ['selectedCategories' => [$category]]) }}"
+                                    >
+                                        {{ $category }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </nav>
 
@@ -149,10 +200,10 @@
                         <div>
                             <p class="text-sm font-semibold text-slate-900">Shop</p>
                             <div class="mt-4 space-y-2 text-sm text-slate-600">
-                                <a class="block hover:text-slate-900" href="#">All Products</a>
-                                <a class="block hover:text-slate-900" href="#">Tech Gadgets</a>
-                                <a class="block hover:text-slate-900" href="#">Lifestyle Gear</a>
-                                <a class="block hover:text-slate-900" href="#">Special Offers</a>
+                                <a class="block hover:text-slate-900" href="{{ route('products.index') }}">All Products</a>
+                                <a class="block hover:text-slate-900" href="{{ route('products.index') }}">Tech Gadgets</a>
+                                <a class="block hover:text-slate-900" href="{{ route('products.index') }}">Lifestyle Gear</a>
+                                <a class="block hover:text-slate-900" href="{{ route('products.index') }}">Special Offers</a>
                             </div>
                         </div>
                         <div>

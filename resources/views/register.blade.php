@@ -6,7 +6,7 @@
         </div>
 
         <div class="w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-xl shadow-slate-200/50 ring-1 ring-slate-100">
-            <form action="#" method="POST" class="space-y-5">
+            <form action="{{ route('register.store') }}" method="POST" class="space-y-5">
                 @csrf
                 
                 <div class="space-y-2">
