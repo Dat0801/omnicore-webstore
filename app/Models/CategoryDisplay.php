@@ -13,6 +13,11 @@ class CategoryDisplay extends Model
     protected $fillable = [
         'name',
         'sort_order',
+        'is_visible',
+    ];
+
+    protected $casts = [
+        'is_visible' => 'boolean',
     ];
 
     public function products(): HasMany

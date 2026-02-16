@@ -25,9 +25,22 @@
                                 {{ $category['name'] }}
                             </span>
                         </div>
-                        <span class="text-xs text-slate-400">
-                            Drag to reorder
-                        </span>
+                        <div class="flex items-center gap-4">
+                            <button
+                                type="button"
+                                data-toggle-visibility="true"
+                                class="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition
+                                    {{ ($category['is_visible'] ?? true) ? 'border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200' }}"
+                            >
+                                <span class="mr-1.5 h-1.5 w-1.5 rounded-full {{ ($category['is_visible'] ?? true) ? 'bg-emerald-500' : 'bg-slate-400' }}"></span>
+                                <span data-visibility-label>
+                                    {{ ($category['is_visible'] ?? true) ? 'Visible on webstore' : 'Hidden on webstore' }}
+                                </span>
+                            </button>
+                            <span class="text-xs text-slate-400">
+                                Drag to reorder
+                            </span>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -39,7 +52,7 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:initialized', function () {
             var container = document.getElementById('category-sortable');
 
             if (!container) {
@@ -51,6 +64,47 @@
             var items = container.querySelectorAll('.sortable-item');
 
             items.forEach(function (item) {
+                var toggleButton = item.querySelector('[data-toggle-visibility]');
+
+                if (toggleButton) {
+                    toggleButton.addEventListener('click', function (event) {
+                        event.preventDefault();
+
+                        var name = item.dataset.name;
+                        var statusDot = toggleButton.querySelector('span');
+                        var label = toggleButton.querySelector('[data-visibility-label]');
+                        var isCurrentlyVisible = toggleButton.classList.contains('border-emerald-200');
+
+                        if (statusDot) {
+                            if (isCurrentlyVisible) {
+                                statusDot.classList.remove('bg-emerald-500');
+                                statusDot.classList.add('bg-slate-400');
+                            } else {
+                                statusDot.classList.remove('bg-slate-400');
+                                statusDot.classList.add('bg-emerald-500');
+                            }
+                        }
+
+                        if (isCurrentlyVisible) {
+                            toggleButton.classList.remove('border-emerald-200', 'bg-emerald-50', 'text-emerald-700', 'hover:bg-emerald-100');
+                            toggleButton.classList.add('border-slate-200', 'bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+
+                            if (label) {
+                                label.textContent = 'Hidden on webstore';
+                            }
+                        } else {
+                            toggleButton.classList.remove('border-slate-200', 'bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                            toggleButton.classList.add('border-emerald-200', 'bg-emerald-50', 'text-emerald-700', 'hover:bg-emerald-100');
+
+                            if (label) {
+                                label.textContent = 'Visible on webstore';
+                            }
+                        }
+
+                        @this.call('toggleVisibility', name);
+                    });
+                }
+
                 item.addEventListener('dragstart', function (event) {
                     dragEl = item;
                     event.dataTransfer.effectAllowed = 'move';

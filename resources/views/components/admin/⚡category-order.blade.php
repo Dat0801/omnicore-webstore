@@ -29,7 +29,24 @@ new class extends Component
             ->all();
     }
 
-    public function save(): void
+    public function toggleVisibility(string $name): void
+    {
+        $this->orders = collect($this->orders)
+            ->map(function (array $category) use ($name): array {
+                if (($category['name'] ?? null) !== $name) {
+                    return $category;
+                }
+
+                $category['is_visible'] = ! ($category['is_visible'] ?? true);
+
+                return $category;
+            })
+            ->all();
+
+        $this->save('Category visibility updated.');
+    }
+
+    public function save(string $flashMessage = 'Category order updated.'): void
     {
         foreach ($this->orders as $category) {
             if (! isset($category['name'])) {
@@ -38,6 +55,7 @@ new class extends Component
 
             $name = $category['name'];
             $sortOrder = $category['sort_order'] ?? null;
+            $isVisible = $category['is_visible'] ?? true;
 
             if ($sortOrder === null || $sortOrder === '') {
                 CategoryDisplay::where('name', $name)->delete();
@@ -47,13 +65,16 @@ new class extends Component
 
             CategoryDisplay::updateOrCreate(
                 ['name' => $name],
-                ['sort_order' => (int) $sortOrder],
+                [
+                    'sort_order' => (int) $sortOrder,
+                    'is_visible' => (bool) $isVisible,
+                ],
             );
         }
 
         $this->loadOrders();
 
-        session()->flash('success', 'Category order updated.');
+        session()->flash('success', $flashMessage);
     }
 
     public function render()
@@ -78,10 +99,12 @@ new class extends Component
 
         $orders = collect($categoryNames)->map(function (string $name) use ($existing): array {
             $sortOrder = $existing->has($name) ? $existing[$name]->sort_order : null;
+            $isVisible = $existing->has($name) ? (bool) $existing[$name]->is_visible : true;
 
             return [
                 'name' => $name,
                 'sort_order' => $sortOrder,
+                'is_visible' => $isVisible,
             ];
         });
 

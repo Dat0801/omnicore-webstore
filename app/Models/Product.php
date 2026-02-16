@@ -53,6 +53,10 @@ class Product extends Model
             ->whereNotNull('products.category')
             ->whereNull('products.erp_parent_id')
             ->leftJoin('category_displays', 'products.category', '=', 'category_displays.name')
+            ->where(function ($query): void {
+                $query->whereNull('category_displays.id')
+                    ->orWhere('category_displays.is_visible', true);
+            })
             ->distinct()
             ->orderByRaw('COALESCE(category_displays.sort_order, 9999), products.category')
             ->pluck('products.category');
